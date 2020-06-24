@@ -25,6 +25,7 @@
 /* USER CODE BEGIN Includes */
 #include "SSD1306_font.h"
 #include "SSD1306.h"
+#include "Interface1_manager.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -73,6 +74,8 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi){
   */
 int main(void)
 {
+    Interface1_manager interface ;
+
   /* USER CODE BEGIN 1 */
 	SSD1306::gpio_struct  gpio_reset;
 	gpio_reset.port = OLED_RESET_GPIO_Port;
