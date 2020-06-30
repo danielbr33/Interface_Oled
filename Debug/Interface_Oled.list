@@ -7956,9 +7956,9 @@ void Buffer::fill(Color color) {
  8003ecc:	685b      	ldr	r3, [r3, #4]
  8003ece:	429a      	cmp	r2, r3
  8003ed0:	da1b      	bge.n	8003f0a <_ZN6Buffer4fillE5Color+0x68>
-			if (color == Black)
+			if (color == White)
  8003ed2:	78fb      	ldrb	r3, [r7, #3]
- 8003ed4:	2b00      	cmp	r3, #0
+ 8003ed4:	2b01      	cmp	r3, #1
  8003ed6:	d10a      	bne.n	8003eee <_ZN6Buffer4fillE5Color+0x4c>
 				table[i][j] = BUFFOR_FILLED;
  8003ed8:	687b      	ldr	r3, [r7, #4]
@@ -8250,9 +8250,9 @@ void Buffer::addLetter(uint8_t letter, Font font, Color color, uint8_t coord_X, 
  80040bc:	f280 81ba 	bge.w	8004434 <_ZN6Buffer9addLetterEh4Font5Colorhh+0x40c>
 			break;
 
-		if (color == Black) {
+		if (color == White) {
  80040c0:	787b      	ldrb	r3, [r7, #1]
- 80040c2:	2b00      	cmp	r3, #0
+ 80040c2:	2b01      	cmp	r3, #1
  80040c4:	f040 80ad 	bne.w	8004222 <_ZN6Buffer9addLetterEh4Font5Colorhh+0x1fa>
 			if (number_of_verse < ((uint8_t)this->buffer_height / 8)) {
  80040c8:	7bbb      	ldrb	r3, [r7, #14]
@@ -8421,9 +8421,9 @@ void Buffer::addLetter(uint8_t letter, Font font, Color color, uint8_t coord_X, 
 			}
 		}
 
-		else if (color == White) {
+		else if (color == Black) {
  8004222:	787b      	ldrb	r3, [r7, #1]
- 8004224:	2b01      	cmp	r3, #1
+ 8004224:	2b00      	cmp	r3, #0
  8004226:	f040 8101 	bne.w	800442c <_ZN6Buffer9addLetterEh4Font5Colorhh+0x404>
 			if (number_of_verse < ((uint8_t)this->buffer_height / 8)) {
  800422a:	7bbb      	ldrb	r3, [r7, #14]
@@ -10524,10 +10524,10 @@ int main(void)
  80050ca:	681b      	ldr	r3, [r3, #0]
  80050cc:	4618      	mov	r0, r3
  80050ce:	f7ff fd89 	bl	8004be4 <_ZN7SSD13064InitEv>
-  oled->Fill(White);
+  oled->Fill(Black);
  80050d2:	4b2c      	ldr	r3, [pc, #176]	; (8005184 <main+0x168>)
  80050d4:	681b      	ldr	r3, [r3, #0]
- 80050d6:	2101      	movs	r1, #1
+ 80050d6:	2100      	movs	r1, #0
  80050d8:	4618      	mov	r0, r3
  80050da:	f7ff fe6a 	bl	8004db2 <_ZN7SSD13064FillE5Color>
   HAL_Delay(1000);
@@ -10541,13 +10541,13 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  oled->Fill(White);
+	  oled->Fill(Black);
  80050ec:	4b25      	ldr	r3, [pc, #148]	; (8005184 <main+0x168>)
  80050ee:	681b      	ldr	r3, [r3, #0]
- 80050f0:	2101      	movs	r1, #1
+ 80050f0:	2100      	movs	r1, #0
  80050f2:	4618      	mov	r0, r3
  80050f4:	f7ff fe5d 	bl	8004db2 <_ZN7SSD13064FillE5Color>
-	  oled->WriteString("HELLO", Font11x18, Black, 2, i-40);
+	  oled->WriteString("HELLO", Font11x18, White, 2, i-40);
  80050f8:	4b22      	ldr	r3, [pc, #136]	; (8005184 <main+0x168>)
  80050fa:	6818      	ldr	r0, [r3, #0]
  80050fc:	f897 3037 	ldrb.w	r3, [r7, #55]	; 0x37
@@ -10556,11 +10556,11 @@ int main(void)
  8005104:	9301      	str	r3, [sp, #4]
  8005106:	2302      	movs	r3, #2
  8005108:	9300      	str	r3, [sp, #0]
- 800510a:	2300      	movs	r3, #0
+ 800510a:	2301      	movs	r3, #1
  800510c:	2202      	movs	r2, #2
  800510e:	491e      	ldr	r1, [pc, #120]	; (8005188 <main+0x16c>)
  8005110:	f7ff fe60 	bl	8004dd4 <_ZN7SSD130611WriteStringEPc4Font5Colorhh>
-	  oled->WriteString("HELLO", Font7x10, Black, 2, i-20);
+	  oled->WriteString("HELLO", Font7x10, White, 2, i-20);
  8005114:	4b1b      	ldr	r3, [pc, #108]	; (8005184 <main+0x168>)
  8005116:	6818      	ldr	r0, [r3, #0]
  8005118:	f897 3037 	ldrb.w	r3, [r7, #55]	; 0x37
@@ -10569,18 +10569,18 @@ int main(void)
  8005120:	9301      	str	r3, [sp, #4]
  8005122:	2302      	movs	r3, #2
  8005124:	9300      	str	r3, [sp, #0]
- 8005126:	2300      	movs	r3, #0
+ 8005126:	2301      	movs	r3, #1
  8005128:	2201      	movs	r2, #1
  800512a:	4917      	ldr	r1, [pc, #92]	; (8005188 <main+0x16c>)
  800512c:	f7ff fe52 	bl	8004dd4 <_ZN7SSD130611WriteStringEPc4Font5Colorhh>
-	  oled->WriteString("HELLO", Font6x8, Black, 2, i);
+	  oled->WriteString("HELLO", Font6x8, White, 2, i);
  8005130:	4b14      	ldr	r3, [pc, #80]	; (8005184 <main+0x168>)
  8005132:	6818      	ldr	r0, [r3, #0]
  8005134:	f897 3037 	ldrb.w	r3, [r7, #55]	; 0x37
  8005138:	9301      	str	r3, [sp, #4]
  800513a:	2302      	movs	r3, #2
  800513c:	9300      	str	r3, [sp, #0]
- 800513e:	2300      	movs	r3, #0
+ 800513e:	2301      	movs	r3, #1
  8005140:	2200      	movs	r2, #0
  8005142:	4911      	ldr	r1, [pc, #68]	; (8005188 <main+0x16c>)
  8005144:	f7ff fe46 	bl	8004dd4 <_ZN7SSD130611WriteStringEPc4Font5Colorhh>
@@ -10602,7 +10602,7 @@ int main(void)
 	  HAL_Delay(20);
  8005168:	2014      	movs	r0, #20
  800516a:	f7fc fee7 	bl	8001f3c <HAL_Delay>
-	  oled->Fill(White);
+	  oled->Fill(Black);
  800516e:	e7bd      	b.n	80050ec <main+0xd0>
 	oled = new SSD1306(&hspi2, gpio_reset, gpio_dc, gpio_cs);
  8005170:	4620      	mov	r0, r4

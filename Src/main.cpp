@@ -112,7 +112,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   oled->ChangeDMA(SET_ON);
   oled->Init();
-  oled->Fill(White);
+  oled->Fill(Black);
   HAL_Delay(1000);
   uint8_t i=0;
   /* USER CODE END 2 */
@@ -121,10 +121,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  oled->Fill(White);
-	  oled->WriteString("HELLO", Font11x18, Black, 2, i-40);
-	  oled->WriteString("HELLO", Font7x10, Black, 2, i-20);
-	  oled->WriteString("HELLO", Font6x8, Black, 2, i);
+	  oled->Fill(Black);
+	  oled->WriteString("HELLO", Font11x18, White, 2, i-40);
+	  oled->WriteString("HELLO", Font7x10, White, 2, i-20);
+	  oled->WriteString("HELLO", Font6x8, White, 2, i);
 	  i++;
 	  if (i>80){
 		  i=0;

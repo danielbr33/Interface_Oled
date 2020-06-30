@@ -5,7 +5,7 @@
 void Buffer::fill(Color color) {
 	for (uint8_t i = 0; i < this->buffer_height / BUFFOR_PART_HEIGHT; i++)
 		for (uint8_t j = 0; j < this->buffer_width; j++) {
-			if (color == Black)
+			if (color == White)
 				table[i][j] = BUFFOR_FILLED;
 			else
 				table[i][j] = 0;
@@ -79,7 +79,7 @@ void Buffer::addLetter(uint8_t letter, Font font, Color color, uint8_t coord_X, 
 		if (coord_X + i >= this->buffer_width)
 			break;
 
-		if (color == Black) {
+		if (color == White) {
 			if (number_of_verse < ((uint8_t)this->buffer_height / 8)) {
 				table[number_of_verse][i+coord_X] |= (Actual_Font->getLetter(letter)[i] << offset);
 			}
@@ -91,7 +91,7 @@ void Buffer::addLetter(uint8_t letter, Font font, Color color, uint8_t coord_X, 
 			}
 		}
 
-		else if (color == White) {
+		else if (color == Black) {
 			if (number_of_verse < ((uint8_t)this->buffer_height / 8)) {
 				if (table[number_of_verse][i+coord_X] == 0)
 					table[number_of_verse][i + coord_X] = ~0;
