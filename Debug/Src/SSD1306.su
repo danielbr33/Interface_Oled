@@ -1,25 +1,24 @@
 gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
-SSD1306.cpp:10:6:void SSD1306::Reset()	16	static
-SSD1306.cpp:23:6:void SSD1306::WriteCommand()	32	static
-SSD1306.cpp:40:6:void SSD1306::WriteData()	40	static
-SSD1306.cpp:58:6:void SSD1306::SPI_Interrupt_DMA()	16	static
-SSD1306.cpp:78:6:void SSD1306::Init()	16	static
-SSD1306.cpp:159:6:void SSD1306::process()	16	static
-SSD1306.cpp:165:6:void SSD1306::Fill(SSD1306_COLOR)	24	static
-SSD1306.cpp:178:6:void SSD1306::DrawPixel(uint8_t, uint8_t, SSD1306_COLOR)	16	static
-SSD1306.cpp:201:6:char SSD1306::WriteChar(char, FontDef, SSD1306_COLOR)	40	static
-SSD1306.cpp:236:6:char SSD1306::WriteString(char*, FontDef, SSD1306_COLOR)	32	static
-SSD1306.cpp:253:6:void SSD1306::SetCursor(uint8_t, uint8_t)	16	static
-SSD1306.cpp:258:1:SSD1306::SSD1306(I2C_HandleTypeDef*, int)	24	static
-SSD1306.cpp:272:6:void SSD1306::AllocBuffer()	16	static
-SSD1306.cpp:276:6:void SSD1306::ChangeDMA(state)	16	static
-SSD1306.cpp:280:6:void SSD1306::ChangeMirrorHorizontal(state)	16	static
-SSD1306.cpp:284:6:void SSD1306::ChangeMirrorVertical(state)	16	static
-SSD1306.cpp:288:6:void SSD1306::ChangeInversionColor(state)	16	static
-SSD1306.cpp:292:6:void SSD1306::ChangeHeight(uint8_t)	16	static
-SSD1306.cpp:296:6:void SSD1306::ChangeWidth(uint8_t)	16	static
-SSD1306.cpp:300:1:SSD1306::SSD1306(SPI_HandleTypeDef*, SSD1306::gpio_struct, SSD1306::gpio_struct, SSD1306::gpio_struct)	24	static
-SSD1306.cpp:320:1:SSD1306::~SSD1306()	16	static
-SSD1306.cpp:320:1:virtual SSD1306::~SSD1306()	16	static
-SSD1306.cpp:322:1:void __static_initialization_and_destruction_0(int, int)	16	static
-SSD1306.cpp:322:1:cpp)	8	static
+SSD1306.cpp:11:6:void SSD1306::Reset()	16	static
+SSD1306.cpp:24:6:void SSD1306::WriteCommand()	32	static
+SSD1306.cpp:41:6:void SSD1306::WriteData()	40	static
+SSD1306.cpp:60:6:void SSD1306::SPI_Interrupt_DMA()	16	static
+SSD1306.cpp:81:6:void SSD1306::Init()	16	static
+SSD1306.cpp:162:6:void SSD1306::process()	16	static
+SSD1306.cpp:168:6:void SSD1306::Fill(Color)	16	static
+SSD1306.cpp:177:6:void SSD1306::WriteChar(char, Font, Color, uint8_t, uint8_t)	32	static
+SSD1306.cpp:182:6:void SSD1306::WriteString(char*, Font, Color, uint8_t, uint8_t)	32	static
+SSD1306.cpp:187:6:void SSD1306::SetCursor(uint8_t, uint8_t)	16	static
+SSD1306.cpp:192:1:SSD1306::SSD1306(I2C_HandleTypeDef*, int)	32	static
+SSD1306.cpp:207:1:SSD1306::SSD1306(SPI_HandleTypeDef*, SSD1306::gpio_struct, SSD1306::gpio_struct, SSD1306::gpio_struct)	32	static
+SSD1306.cpp:228:1:SSD1306::~SSD1306()	16	static
+SSD1306.cpp:228:1:virtual SSD1306::~SSD1306()	16	static
+SSD1306.cpp:232:6:void SSD1306::ChangeDMA(state)	16	static
+SSD1306.cpp:236:6:void SSD1306::ChangeMirrorHorizontal(state)	16	static
+SSD1306.cpp:240:6:void SSD1306::ChangeMirrorVertical(state)	16	static
+SSD1306.cpp:244:6:void SSD1306::AllocBuffer()	16	static
+SSD1306.cpp:248:6:void SSD1306::ChangeInversionColor(state)	16	static
+SSD1306.cpp:252:6:void SSD1306::ChangeHeight(uint8_t)	16	static
+SSD1306.cpp:256:6:void SSD1306::ChangeWidth(uint8_t)	16	static
+SSD1306.cpp:258:1:void __static_initialization_and_destruction_0(int, int)	16	static
+SSD1306.cpp:258:1:cpp)	8	static

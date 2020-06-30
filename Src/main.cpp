@@ -23,8 +23,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "SSD1306_font.h"
 #include "SSD1306.h"
+#include "Buffer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -112,22 +112,25 @@ int main(void)
   /* USER CODE BEGIN 2 */
   oled->ChangeDMA(SET_ON);
   oled->Init();
-  oled->Fill(WHITE);
-  oled->SetCursor(0,0);
-  oled->WriteString("aaaaaaaaaaaaaaaaaa",Font_7x10,WHITE);
-  oled->SetCursor(0,10);
-  oled->WriteString("aaaaaaaaaaaaaaaaaa/",Font_7x10,BLACK);
-//  oled->SetCursor(0,20);
-//  oled->WriteString("/////////////////////",Font_7x10,WHITE);
-//  oled->SetCursor(0,30);
-//  oled->WriteString("/////////////////////",Font_7x10,BLACK);
+  oled->Fill(White);
   HAL_Delay(1000);
+  uint8_t i=0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  oled->Fill(White);
+	  oled->WriteString("HELLO", Font11x18, Black, 2, i-40);
+	  oled->WriteString("HELLO", Font7x10, Black, 2, i-20);
+	  oled->WriteString("HELLO", Font6x8, Black, 2, i);
+	  i++;
+	  if (i>80){
+		  i=0;
+		  HAL_Delay(300);
+	  }
+	  HAL_Delay(20);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

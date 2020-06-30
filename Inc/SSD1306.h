@@ -12,7 +12,7 @@
 #define __SSD1306_H__
 
 
-#include "SSD1306_font.h"
+#include "Buffer.h"
 
 
 #define STM32F3
@@ -94,10 +94,10 @@ public:
 	virtual ~SSD1306();
 	// Procedure definitions
 	void Init(void);
-	void Fill(SSD1306_COLOR color);
+	void Fill(Color color);
 	void DrawPixel(uint8_t x, uint8_t y, SSD1306_COLOR color);
-	char WriteChar(char ch, FontDef Font, SSD1306_COLOR color);
-	char WriteString(char* str, FontDef Font, SSD1306_COLOR color);
+	void WriteChar(char ch, Font Font, Color color, uint8_t coordX,uint8_t coordY);
+	void WriteString(char* str, Font Font, Color color, uint8_t coordX, uint8_t coordY);
 	void SetCursor(uint8_t x, uint8_t y);
 	void process(void);
 	void SPI_Interrupt_DMA();
@@ -113,6 +113,7 @@ public:
 	void ChangeHeight(uint8_t height);
 	void ChangeWidth(uint8_t width);
 	void AllocBuffer();
+	void print();
 
 private:
 	I2C_HandleTypeDef* I2C_Port;
@@ -140,6 +141,7 @@ private:
     uint8_t status;
     uint8_t initCommands[28];
     uint8_t lineCommands[3];
+    Buffer *buffer;
     uint8_t* SSD1306_Buffer;
     uint8_t counter;
 };
