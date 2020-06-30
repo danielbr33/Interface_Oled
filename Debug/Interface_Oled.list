@@ -9721,47 +9721,47 @@ void SSD1306::SPI_Interrupt_DMA(){
  8004b72:	687b      	ldr	r3, [r7, #4]
  8004b74:	f893 3036 	ldrb.w	r3, [r3, #54]	; 0x36
  8004b78:	2b00      	cmp	r3, #0
- 8004b7a:	d117      	bne.n	8004bac <_ZN7SSD130617SPI_Interrupt_DMAEv+0x4c>
-			lineCommands[0]=SET_PAGE_START_ADDR + counter;
+ 8004b7a:	d11f      	bne.n	8004bbc <_ZN7SSD130617SPI_Interrupt_DMAEv+0x5c>
+			counter+=1;
  8004b7c:	687b      	ldr	r3, [r7, #4]
  8004b7e:	f893 3060 	ldrb.w	r3, [r3, #96]	; 0x60
- 8004b82:	3b50      	subs	r3, #80	; 0x50
+ 8004b82:	3301      	adds	r3, #1
  8004b84:	b2da      	uxtb	r2, r3
  8004b86:	687b      	ldr	r3, [r7, #4]
- 8004b88:	f883 2053 	strb.w	r2, [r3, #83]	; 0x53
-			lineCommands[1]=LOW_COLUMN_ADDR;
+ 8004b88:	f883 2060 	strb.w	r2, [r3, #96]	; 0x60
+			lineCommands[0]=SET_PAGE_START_ADDR + counter;
  8004b8c:	687b      	ldr	r3, [r7, #4]
- 8004b8e:	2200      	movs	r2, #0
- 8004b90:	f883 2054 	strb.w	r2, [r3, #84]	; 0x54
-			lineCommands[2]=HIGH_COLUMN_ADDR;
- 8004b94:	687b      	ldr	r3, [r7, #4]
- 8004b96:	2210      	movs	r2, #16
- 8004b98:	f883 2055 	strb.w	r2, [r3, #85]	; 0x55
-			status=1;
+ 8004b8e:	f893 3060 	ldrb.w	r3, [r3, #96]	; 0x60
+ 8004b92:	3b50      	subs	r3, #80	; 0x50
+ 8004b94:	b2da      	uxtb	r2, r3
+ 8004b96:	687b      	ldr	r3, [r7, #4]
+ 8004b98:	f883 2053 	strb.w	r2, [r3, #83]	; 0x53
+			lineCommands[1]=LOW_COLUMN_ADDR;
  8004b9c:	687b      	ldr	r3, [r7, #4]
- 8004b9e:	2201      	movs	r2, #1
- 8004ba0:	f883 2036 	strb.w	r2, [r3, #54]	; 0x36
+ 8004b9e:	2200      	movs	r2, #0
+ 8004ba0:	f883 2054 	strb.w	r2, [r3, #84]	; 0x54
+			lineCommands[2]=HIGH_COLUMN_ADDR;
+ 8004ba4:	687b      	ldr	r3, [r7, #4]
+ 8004ba6:	2210      	movs	r2, #16
+ 8004ba8:	f883 2055 	strb.w	r2, [r3, #85]	; 0x55
+			status=1;
+ 8004bac:	687b      	ldr	r3, [r7, #4]
+ 8004bae:	2201      	movs	r2, #1
+ 8004bb0:	f883 2036 	strb.w	r2, [r3, #54]	; 0x36
 			WriteCommand();
- 8004ba4:	6878      	ldr	r0, [r7, #4]
- 8004ba6:	f7ff fef8 	bl	800499a <_ZN7SSD130612WriteCommandEv>
+ 8004bb4:	6878      	ldr	r0, [r7, #4]
+ 8004bb6:	f7ff fef0 	bl	800499a <_ZN7SSD130612WriteCommandEv>
 			if (counter==8)
 				counter=0;
 			WriteData();
 		}
 	//}
 }
- 8004baa:	e017      	b.n	8004bdc <_ZN7SSD130617SPI_Interrupt_DMAEv+0x7c>
+ 8004bba:	e00f      	b.n	8004bdc <_ZN7SSD130617SPI_Interrupt_DMAEv+0x7c>
 			status=0;
- 8004bac:	687b      	ldr	r3, [r7, #4]
- 8004bae:	2200      	movs	r2, #0
- 8004bb0:	f883 2036 	strb.w	r2, [r3, #54]	; 0x36
-			counter+=1;
- 8004bb4:	687b      	ldr	r3, [r7, #4]
- 8004bb6:	f893 3060 	ldrb.w	r3, [r3, #96]	; 0x60
- 8004bba:	3301      	adds	r3, #1
- 8004bbc:	b2da      	uxtb	r2, r3
- 8004bbe:	687b      	ldr	r3, [r7, #4]
- 8004bc0:	f883 2060 	strb.w	r2, [r3, #96]	; 0x60
+ 8004bbc:	687b      	ldr	r3, [r7, #4]
+ 8004bbe:	2200      	movs	r2, #0
+ 8004bc0:	f883 2036 	strb.w	r2, [r3, #54]	; 0x36
 			if (counter==8)
  8004bc4:	687b      	ldr	r3, [r7, #4]
  8004bc6:	f893 3060 	ldrb.w	r3, [r3, #96]	; 0x60
