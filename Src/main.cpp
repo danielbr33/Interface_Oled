@@ -21,6 +21,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "dma.h"
+#include "i2c.h"
 #include "spi.h"
 #include "usart.h"
 #include "gpio.h"
@@ -50,6 +51,7 @@
 
 /* USER CODE BEGIN PV */
 SSD1306* oled;
+SSD1306* oled2;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -86,6 +88,7 @@ int main(void)
 	gpio_cs.pin = OLED_CS_Pin;
 
 	oled = new SSD1306(&hspi2, gpio_reset, gpio_dc, gpio_cs);
+	oled2 = new SSD1306(&hi2c2, 0x3C<<1);
   /* USER CODE END 1 */
 
 
@@ -110,10 +113,17 @@ int main(void)
   MX_DMA_Init();
   MX_SPI2_Init();
   MX_USART2_UART_Init();
+  MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
   oled->ChangeDMA(SET_ON);
-  oled->Init();
-  oled->Fill(Black);
+  oled2->ChangeDMA(SET_ON);
+  //oled->Init();
+  oled2->Init();
+  //oled->Fill(Black);
+  oled2->Fill(Black);
+  HAL_Delay(5);
+  oled->WriteString("HELLO", Font11x18, White, 2, 10);
+  oled2->WriteString("HELLO", Font11x18, White, 2, 10);
   HAL_Delay(1000);
   uint8_t i=0;
   /* USER CODE END 2 */
@@ -121,7 +131,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
-  {
+  {/*
 	  oled->Fill(Black);
 	  oled->WriteString("HELLO", Font11x18, White, 2, i-40);
 	  oled->WriteString("HELLO", Font7x10, White, 2, i-20);
@@ -131,7 +141,7 @@ int main(void)
 		  i=0;
 		  HAL_Delay(300);
 	  }
-	  HAL_Delay(20);
+	  HAL_Delay(20);*/
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -175,8 +185,9 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2;
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2|RCC_PERIPHCLK_I2C2;
   PeriphClkInit.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
+  PeriphClkInit.I2c2ClockSelection = RCC_I2C2CLKSOURCE_HSI;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();

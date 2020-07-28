@@ -151,12 +151,22 @@ void SSD1306::Init(void) {
     initialized = 1;
 
     Fill(White);
-    if (dma_status==SET_ON)
-    	HAL_SPI_Transmit_DMA(SPI_Port, initCommands, 28);
-    else
-    	HAL_SPI_Transmit(SPI_Port, initCommands, 28, HAL_MAX_DELAY);
-    status=0;
-    SPI_Interrupt_DMA();
+    if (i2c_or_spi == SPI){
+		if (dma_status==SET_ON)
+			HAL_SPI_Transmit_DMA(SPI_Port, initCommands, 28);
+		else
+			HAL_SPI_Transmit(SPI_Port, initCommands, 28, HAL_MAX_DELAY);
+		status=0;
+		SPI_Interrupt_DMA();
+    }
+    else{
+    	if (dma_status==SET_ON)
+			HAL_I2C_Mem_Write_DMA(I2C_Port, I2C_ADDR, 0x00, 1, initCommands, 28);
+    	else
+			HAL_I2C_Mem_Write(I2C_Port, I2C_ADDR, 0x00, 1, initCommands, 28, HAL_MAX_DELAY);
+    	status=0;
+    	//SPI_Interrupt_DMA();
+    }
 }
 
 void SSD1306::process(){

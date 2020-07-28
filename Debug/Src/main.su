@@ -1,7 +1,7 @@
 gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
-main.cpp:59:6:void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef*)	16	static
-main.cpp:73:5:int main()	88	static
-main.cpp:146:6:void SystemClock_Config()	160	static
-main.cpp:194:6:void Error_Handler()	4	static
-main.cpp:200:1:void __static_initialization_and_destruction_0(int, int)	16	static
-main.cpp:200:1:cpp)	8	static
+main.cpp:61:6:void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef*)	16	static
+main.cpp:75:5:int main()	88	static
+main.cpp:156:6:void SystemClock_Config()	160	static
+main.cpp:205:6:void Error_Handler()	4	static
+main.cpp:211:1:void __static_initialization_and_destruction_0(int, int)	16	static
+main.cpp:211:1:cpp)	8	static
