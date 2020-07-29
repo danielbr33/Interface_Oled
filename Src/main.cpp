@@ -29,9 +29,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "SSD1306.h"
-<<<<<<< HEAD
 #include "Interface1_manager.h"
-=======
 #include "Buffer.h"
 >>>>>>> dev
 /* USER CODE END Includes */
