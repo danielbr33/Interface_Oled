@@ -78,7 +78,7 @@ void SSD1306::SPI_Interrupt_DMA(){
 	//}
 }
 
-void SSD1306::Init(void) {
+int SSD1306::Init(void) {
 	// Reset OLED
 	Reset();
     // Wait for the screen to boot
@@ -201,7 +201,7 @@ void SSD1306::SetCursor(uint8_t x, uint8_t y) {
 
 SSD1306::SSD1306(I2C_HandleTypeDef* i2c, int I2C_ADDRESS){
 	this->I2C_Port=i2c;
-	this->I2C_ADDR=I2C_ADDR;
+	this->I2C_ADDR=I2C_ADDRESS;
 	this->dma_status=SET_OFF;
 	this->mirror_vertical_status = SET_OFF;
 	this->mirror_horizontal_status = SET_OFF;

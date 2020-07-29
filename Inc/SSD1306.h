@@ -93,7 +93,7 @@ public:
 	SSD1306(SPI_HandleTypeDef* hspi, gpio_struct reset, gpio_struct DC, gpio_struct CS);
 	virtual ~SSD1306();
 	// Procedure definitions
-	void Init(void);
+	int Init(void);
 	void Fill(Color color);
 	void DrawPixel(uint8_t x, uint8_t y, SSD1306_COLOR color);
 	void WriteChar(char ch, Font Font, Color color, uint8_t coordX,uint8_t coordY);

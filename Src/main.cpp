@@ -61,6 +61,9 @@ void SystemClock_Config(void);
 void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi){
 	oled->SPI_Interrupt_DMA();
 };
+void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c)  {
+	oled2->SPI_Interrupt_DMA();
+}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -116,14 +119,14 @@ int main(void)
   MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
   oled->ChangeDMA(SET_ON);
-  oled2->ChangeDMA(SET_ON);
-  //oled->Init();
-  oled2->Init();
-  //oled->Fill(Black);
-  oled2->Fill(Black);
+  oled->Init();
+  oled->Fill(Black);
   HAL_Delay(5);
   oled->WriteString("HELLO", Font11x18, White, 2, 10);
-  oled2->WriteString("HELLO", Font11x18, White, 2, 10);
+  oled2->ChangeDMA(SET_ON);
+  oled2->Init();
+  oled2->Fill(Black);
+  oled2->WriteString("HELLO2", Font11x18, White, 2, 10);
   HAL_Delay(1000);
   uint8_t i=0;
   /* USER CODE END 2 */
@@ -131,17 +134,22 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
-  {/*
+  {
 	  oled->Fill(Black);
-	  oled->WriteString("HELLO", Font11x18, White, 2, i-40);
-	  oled->WriteString("HELLO", Font7x10, White, 2, i-20);
-	  oled->WriteString("HELLO", Font6x8, White, 2, i);
+	  oled->WriteString("USED SPI", Font11x18, White, 2, i-40);
+	  oled->WriteString("TEST", Font7x10, White, 10, i-20);
+	  oled->WriteString("SSD1306", Font6x8, White, 2, i);
+
+	  oled2->Fill(Black);
+	  oled2->WriteString("USED I2C", Font11x18, White, 2, i-40);
+	  oled2->WriteString("TEST", Font7x10, White, 10, i-20);
+	  oled2->WriteString("SSD1306", Font6x8, White, 2, i);
 	  i++;
 	  if (i>80){
 		  i=0;
 		  HAL_Delay(300);
 	  }
-	  HAL_Delay(20);*/
+	  HAL_Delay(20);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

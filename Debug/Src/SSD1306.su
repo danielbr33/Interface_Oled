@@ -3,7 +3,7 @@ SSD1306.cpp:11:6:void SSD1306::Reset()	16	static
 SSD1306.cpp:24:6:void SSD1306::WriteCommand()	32	static
 SSD1306.cpp:41:6:void SSD1306::WriteData()	40	static
 SSD1306.cpp:60:6:void SSD1306::SPI_Interrupt_DMA()	16	static
-SSD1306.cpp:81:6:void SSD1306::Init()	32	static
+SSD1306.cpp:81:5:int SSD1306::Init()	32	static
 SSD1306.cpp:172:6:void SSD1306::process()	16	static
 SSD1306.cpp:178:6:void SSD1306::Fill(Color)	16	static
 SSD1306.cpp:187:6:void SSD1306::WriteChar(char, Font, Color, uint8_t, uint8_t)	32	static
