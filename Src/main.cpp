@@ -29,7 +29,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "SSD1306.h"
-#include "Interface1_manager.h"
+#include "Interface_manager.h"
 #include "Buffer.h"
 >>>>>>> dev
 /* USER CODE END Includes */
@@ -79,7 +79,7 @@ void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c)  {
   */
 int main(void)
 {
-    Interface1_manager interface ;
+    Interface_manager interface ;
 
   /* USER CODE BEGIN 1 */
 	SSD1306::gpio_struct  gpio_reset;

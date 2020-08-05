@@ -29,15 +29,37 @@ void List::addFirstElement(List_element *element){
 	size++;
 }
 
-void List::addNextElement(List_element *element){
+void List::addLastElement(List_element *element){
+
     last_element->setNextPointer(element) ;
     first_element->setPrevPointer(element) ;
     element->setPrevPointer(last_element) ;
-	last_element = element;
-	last_element->setNextPointer(first_element) ;
+    last_element = element;
+    last_element->setNextPointer(first_element) ;
 	size++;
-	//if( itIsSubList )
-       // BackToMainList->setLastSubListParameter(last_element) ;
+}
+
+void List::addBeforeTheLastOne(List_element *element){
+    if(size == 1 ){
+        first_element = current_element = element ;
+        last_element->setNextPointer(first_element) ;
+        first_element->setPrevPointer(last_element) ;
+    }
+    else{
+        last_element->getPrevPointer()->setNextPointer(element) ;
+        element->setPrevPointer(last_element->getPrevPointer()) ;
+    }
+    last_element->setPrevPointer(element) ;
+    element->setNextPointer(last_element) ;
+    size++ ;
+
+}
+
+void List::addBackParameter(){
+
+    Parameter *Back = new Parameter("BACK") ;
+    addParameter(Back) ;
+    Back->setAsBackParameter() ;
 }
 
 void List::addParameter(Parameter *parameter){
@@ -48,8 +70,10 @@ void List::addParameter(Parameter *parameter){
 
 	if(size == false){
 		addFirstElement(new List_element(parameter));
-	} else {
-		addNextElement(new List_element(parameter));
+	}else if( last_element->getMainParameter()->isBackParameter())
+        addBeforeTheLastOne(new List_element(parameter)) ;
+	 else {
+		addLastElement(new List_element(parameter));
 	}
 
 #ifdef DEBUG
@@ -80,7 +104,7 @@ void List::addParameter(Parameter *parameter){
 Parameter* List::getParameter(){
     return current_element->getCurrentParameter() ;
 }
-
+/*
 void List::print(){
 	cout << "Rozmiar listy: " << size << endl;
 	List_element *printing_element = first_element;
@@ -90,8 +114,7 @@ void List::print(){
 		printing_element = printing_element->getNextPointer();
 	}
 }
-
-
+*/
 uint16_t List::getSize(){
     return size ;
 }
@@ -112,15 +135,16 @@ void List::moveLeft(){
     else
         current_element = current_element->getPrevPointer();
 }
+void List::setOutOfSubList(){
+
+    current_element->getMainParameter()->closeLastOpenSubList() ;
+
+}
 
 void List::resetSubList(){
     current_element = first_element ;
 }
 
-
-uint8_t List::ifLastListElement(){
-    if( current_element == last_element)
-        return true ;
-    else
-        return false ;
+uint8_t List::hasOpenSubList(){
+    return current_element->getMainParameter()->ifInSubList() ;
 }

@@ -31,9 +31,9 @@
 #include <cstdio>
 #include <stdint.h>
 #include <conio.h>
-#include "Interface1_manager.h"
+#include "Interface_manager.h"
 using namespace std ;
 
 int main(){
-    Interface1_manager interface ;
+    Interface_manager interface ;
 }

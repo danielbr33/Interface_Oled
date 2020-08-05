@@ -9,7 +9,6 @@ class List_element{
       List_element *next , *prev;
       Parameter *parameter_element ;
   public:
-     // List_element *next ; //*public for test //Marek
       List_element(Parameter *parametr);
 
       List_element* getNextPointer() ;

@@ -26,8 +26,8 @@ Parameter* List_element::getMainParameter(){
     return parameter_element ;
 }
 
-
+/*
 void List_element::print(){
 	cout<<parameter_element->getHeadLine() << endl;
 }
-
+*/
