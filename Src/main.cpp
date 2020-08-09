@@ -61,18 +61,11 @@ Interface_manager interface;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-
+uint8_t zmienna='w';
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 	interface.interrupt();
 }
-int counter=0;
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)  {
-	counter+=1;
-	if(counter==100){
-		interface.interrupt();
-		counter=0;
-	}
-}
+
 void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi){
 	oled->SPI_Interrupt_DMA();
 };
@@ -133,33 +126,28 @@ int main(void)
   MX_USART2_UART_Init();
   MX_I2C2_Init();
   MX_TIM16_Init();
-  HAL_TIM_Base_Start_IT(&htim16);
   /* USER CODE BEGIN 2 */
+
   oled->ChangeDMA(SET_ON);
   oled->Init();
-  HAL_Delay(5);
+
   oled2->ChangeDMA(SET_ON);
   oled2->Init();
   oled2->Fill(Black);
   oled2->WriteString("HELLO2", Font11x18, White, 2, 10);
+  oled2->Fill(Black);
+
   HAL_Delay(1000);
-  uint8_t i=0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  oled2->Fill(Black);
-	  oled2->WriteString("USED I2C", Font11x18, White, 2, i-40);
-	  oled2->WriteString("TEST", Font7x10, White, 10, i-20);
-	  oled2->WriteString("SSD1306", Font6x8, White, 2, i);
-	  i++;
-	  if (i>80){
-		  i=0;
-		  HAL_Delay(300);
-	  }
-	  HAL_Delay(20);
+	  oled2->WriteString("USED I2C", Font11x18, White, 2, 2);
+	  oled2->WriteString("TEST", Font7x10, White, 10, 20);
+	  oled2->WriteString("SSD1306", Font6x8, White, 2, 40);
+	 // HAL_UART_Receive_IT(&huart2, &zmienna, 1);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

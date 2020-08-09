@@ -1,5 +1,12 @@
 #include "Interface.h"
+#include "main.h"
+#include "dma.h"
+#include "i2c.h"
+#include "spi.h"
+#include "tim.h"
 #include "usart.h"
+#include "gpio.h"
+#include "stm32f3xx_hal.h"
 #include "SSD1306.h"
 
 #ifndef INTERFACEMANAGER_H_
@@ -15,6 +22,6 @@ private:
 	Interface *Ssd_1306 ;
 	Interface_Element::Button readKey() ;
 	void display() ;
-	uint16_t button;
+	uint8_t button;
 };
 #endif /* INTERFACEMANAGER_H_ */

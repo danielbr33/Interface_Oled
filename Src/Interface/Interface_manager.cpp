@@ -7,7 +7,7 @@
 
 Interface_manager::Interface_manager(){
     Ssd_1306 = new Interface ;
-    HAL_UART_Receive_IT(&huart2, (uint8_t*)&button, 1);
+    HAL_UART_Receive_IT(&huart2, &button, 1);
 }
 
 void Interface_manager::interrupt(){
