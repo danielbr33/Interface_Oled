@@ -6,61 +6,43 @@
 #define INTERVAL 0.1
 
 Interface_manager::Interface_manager(){
-
     Ssd_1306 = new Interface ;
+    HAL_UART_Receive_IT(&huart2, (uint8_t*)&button, 1);
+}
 
-    auto start = chrono::system_clock::now() ;
-    chrono::duration<double> elapsed_seconds  ;
-    double time ;
-
-    while(true){
-        if(kbhit()){
-            if( getch() == SPECIAL_BUTTON){
-                Ssd_1306->sendAction( readKey() ) ;
-            }
-        }
-        auto end = chrono::system_clock::now() ;
-        elapsed_seconds = end - start ;
-        if( time < elapsed_seconds.count() + INTERVAL ){ // double fmod( double x, double y );
-            time += INTERVAL ;
-            Ssd_1306->refresh() ;
-            display() ;
-        }
-    }
+void Interface_manager::interrupt(){
+	Ssd_1306->sendAction( readKey() ) ;
+	Ssd_1306->refresh() ;
+	display() ;
+    HAL_UART_Receive_IT(&huart2, (uint8_t*)&button, 1);
 }
 
 Interface_Element::Button Interface_manager::readKey(){
-    if(kbhit()){
-        switch(getch())
-        {
-            case BUTTON_1:
-                return Interface_Element::LEFT_BUTTON;
-            case BUTTON_2:
-                return Interface_Element::RIGHT_BUTTON;
-            case BUTTON_3:
-                return Interface_Element::ENTER ;
-            break;
-        }
+	switch(this->button){
+		case BUTTON_1:
+			return Interface_Element::LEFT_BUTTON;
+        case BUTTON_2:
+            return Interface_Element::RIGHT_BUTTON;
+        case BUTTON_3:
+        	return Interface_Element::ENTER ;
+        break;
     }
 }
 void Interface_manager::display(){
-
-    system("cls");
-
+	oled->Fill(White);
     if( Ssd_1306->isNoChangeableErrorCounting() ){
-        cout <<"No change" << endl ;
-        cout <<"possible" ;
+        oled->WriteString("No change", Font7x10, Black, 2, 2);
+        oled->WriteString("possible", Font7x10, Black, 2, 17);
     }
     else{
-        cout << Ssd_1306->getParameterHeadline() << endl;
+    	oled->WriteString( (char*)Ssd_1306->getParameterHeadline().c_str(), Font7x10, Black, 2, 2);
         if( !(Ssd_1306->isBackFromSubListParameter()) && !(Ssd_1306->hasSubList()) ){
             if( Ssd_1306->isVisibleValue() )
-                cout << Ssd_1306->getParameterValue() << " " << Ssd_1306->getParameterUnit() ;
-
+        		oled->WriteString( (char*)Ssd_1306->getParameterValue(), Font7x10, Black, 2, 17);
             else{
                 for( uint16_t i = (Ssd_1306->getParameterValue() )*10 ; i > 0 ; i /= 10)
-                    cout <<" ";
-                cout << Ssd_1306->getParameterUnit() ;
+                    oled->WriteString(" ", Font7x10, Black, 2, 2);
+                oled->WriteString((char*)Ssd_1306->getParameterUnit().c_str(), Font7x10, Black, 2, 17);
             }
         }
     }

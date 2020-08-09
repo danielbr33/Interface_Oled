@@ -3,8 +3,6 @@
 #ifndef INTERFACE_H_
 #define INTERFACE_H_
 
-#include <conio.h>
-
 class Interface{
 private :
 	Parameter *battery_voltage ;

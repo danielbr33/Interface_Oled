@@ -1,6 +1,5 @@
 #include "Parameter.h"
 #include "List.h"
-#include <windows.h>
 #define EDIT_MODE_TIME 10
 #define ERROR_TIME 10
 

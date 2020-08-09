@@ -23,12 +23,14 @@
 #include "dma.h"
 #include "i2c.h"
 #include "spi.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "SSD1306.h"
+#include "Interface_manager.h"
 #include "Buffer.h"
 /* USER CODE END Includes */
 
@@ -51,6 +53,7 @@
 
 /* USER CODE BEGIN PV */
 SSD1306* oled;
+SSD1306* oled2;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -60,6 +63,9 @@ void SystemClock_Config(void);
 void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi){
 	oled->SPI_Interrupt_DMA();
 };
+void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c)  {
+	oled2->SPI_Interrupt_DMA();
+}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -87,6 +93,7 @@ int main(void)
 	gpio_cs.pin = OLED_CS_Pin;
 
 	oled = new SSD1306(&hspi2, gpio_reset, gpio_dc, gpio_cs);
+	oled2 = new SSD1306(&hi2c2, 0x3C<<1);
   /* USER CODE END 1 */
   
 
@@ -112,10 +119,17 @@ int main(void)
   MX_SPI2_Init();
   MX_USART2_UART_Init();
   MX_I2C2_Init();
+  MX_TIM16_Init();
   /* USER CODE BEGIN 2 */
   oled->ChangeDMA(SET_ON);
   oled->Init();
   oled->Fill(Black);
+  HAL_Delay(5);
+  oled->WriteString("HELLO", Font11x18, White, 2, 10);
+  oled2->ChangeDMA(SET_ON);
+  oled2->Init();
+  oled2->Fill(Black);
+  oled2->WriteString("HELLO2", Font11x18, White, 2, 10);
   HAL_Delay(1000);
   uint8_t i=0;
   /* USER CODE END 2 */
@@ -125,9 +139,14 @@ int main(void)
   while (1)
   {
 	  oled->Fill(Black);
-	  oled->WriteString("HELLO", Font11x18, White, 2, i-40);
-	  oled->WriteString("HELLO", Font7x10, White, 2, i-20);
-	  oled->WriteString("HELLO", Font6x8, White, 2, i);
+	  oled->WriteString("USED SPI", Font11x18, White, 2, i-40);
+	  oled->WriteString("TEST", Font7x10, White, 10, i-20);
+	  oled->WriteString("SSD1306", Font6x8, White, 2, i);
+
+	  oled2->Fill(Black);
+	  oled2->WriteString("USED I2C", Font11x18, White, 2, i-40);
+	  oled2->WriteString("TEST", Font7x10, White, 10, i-20);
+	  oled2->WriteString("SSD1306", Font6x8, White, 2, i);
 	  i++;
 	  if (i>80){
 		  i=0;
@@ -177,9 +196,11 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2|RCC_PERIPHCLK_I2C2;
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2|RCC_PERIPHCLK_I2C2
+                              |RCC_PERIPHCLK_TIM16;
   PeriphClkInit.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
   PeriphClkInit.I2c2ClockSelection = RCC_I2C2CLKSOURCE_HSI;
+  PeriphClkInit.Tim16ClockSelection = RCC_TIM16CLK_HCLK;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
