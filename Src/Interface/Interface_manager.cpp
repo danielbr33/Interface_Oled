@@ -1,20 +1,25 @@
 #include "Interface_manager.h"
-#define BUTTON_1 75 // left
-#define BUTTON_2 77 // right
-#define BUTTON_3 80 // down
+#include "usart.h"
+#define BUTTON_1 'a' // left
+#define BUTTON_2 'd' // right
+#define BUTTON_3 's'// down
 #define SPECIAL_BUTTON 224
 #define INTERVAL 0.1
 
-Interface_manager::Interface_manager(){
+Interface_manager::Interface_manager(UART_HandleTypeDef* huart){
     Ssd_1306 = new Interface ;
-    HAL_UART_Receive_IT(&huart2, &button, 1);
+    uart_interface=huart;
+}
+
+void Interface_manager::init(){
+    HAL_UART_Receive_IT(uart_interface, &button, 1);
 }
 
 void Interface_manager::interrupt(){
 	Ssd_1306->sendAction( readKey() ) ;
 	Ssd_1306->refresh() ;
 	display() ;
-    HAL_UART_Receive_IT(&huart2, (uint8_t*)&button, 1);
+    HAL_UART_Receive_IT(uart_interface, (uint8_t*)&button, 1);
 }
 
 Interface_Element::Button Interface_manager::readKey(){
@@ -37,8 +42,11 @@ void Interface_manager::display(){
     else{
     	oled->WriteString( (char*)Ssd_1306->getParameterHeadline().c_str(), Font7x10, Black, 2, 2);
         if( !(Ssd_1306->isBackFromSubListParameter()) && !(Ssd_1306->hasSubList()) ){
-            if( Ssd_1306->isVisibleValue() )
-        		oled->WriteString( (char*)Ssd_1306->getParameterValue(), Font7x10, Black, 2, 17);
+            if( Ssd_1306->isVisibleValue() ){
+            	char temp[15];
+            	sprintf(temp, "%d", Ssd_1306->getParameterValue());
+        		oled->WriteString( temp, Font7x10, Black, 2, 17);
+            }
             else{
                 for( uint16_t i = (Ssd_1306->getParameterValue() )*10 ; i > 0 ; i /= 10)
                     oled->WriteString(" ", Font7x10, Black, 2, 2);
