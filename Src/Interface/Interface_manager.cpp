@@ -6,9 +6,10 @@
 #define SPECIAL_BUTTON 224
 #define INTERVAL 0.1
 
-Interface_manager::Interface_manager(UART_HandleTypeDef* huart){
+Interface_manager::Interface_manager(UART_HandleTypeDef* huart, SSD1306* oled){
     Ssd_1306 = new Interface ;
     uart_interface=huart;
+    this->oled=oled;
 }
 
 void Interface_manager::init(){
