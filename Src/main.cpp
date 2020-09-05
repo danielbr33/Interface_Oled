@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
 #include "dma.h"
 #include "i2c.h"
 #include "spi.h"
@@ -32,7 +33,6 @@
 #include "SSD1306.h"
 #include "Interface_manager.h"
 #include "Buffer.h"
-#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -55,26 +55,15 @@
 /* USER CODE BEGIN PV */
 SSD1306* oled;
 SSD1306* oled2;
-Interface_manager* interface;
-Interface_manager* interface2;
+Interface_manager* Interface1;
+Interface_manager* Interface2;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-	//interface->interrupt();
-	interface2->interrupt();
-}
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
-	interface->interrupt();
-}
-void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi){
-	oled->SPI_Interrupt_DMA();
-};
-void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c)  {
-	oled2->SPI_Interrupt_DMA();
-}
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -103,8 +92,9 @@ int main(void)
 
 	oled = new SSD1306(&hspi2, gpio_reset, gpio_dc, gpio_cs);
 	oled2 = new SSD1306(&hi2c2, 0x3C<<1);
-	interface = new Interface_manager(&huart2, oled);
-	interface2 = new Interface_manager(&huart2, oled2);
+
+	Interface1=new Interface_manager(&huart2, oled);
+	Interface2=new Interface_manager(&huart2, oled2);
   /* USER CODE END 1 */
 
 
@@ -132,27 +122,47 @@ int main(void)
   MX_I2C2_Init();
   MX_TIM16_Init();
   /* USER CODE BEGIN 2 */
-
   oled->ChangeDMA(SET_ON);
   oled->Init();
-
+  oled->Fill(Black);
+  HAL_Delay(5);
+  oled->WriteString("HELLO", Font11x18, White, 2, 10);
   oled2->ChangeDMA(SET_ON);
   oled2->Init();
-
-  interface->init();
-  interface2->init();
-
+  oled2->Fill(Black);
+  oled2->WriteString("HELLO2", Font11x18, White, 2, 10);
   HAL_Delay(1000);
+  uint8_t i=0;
+  Interface2->interrupt();
   /* USER CODE END 2 */
+
+  /* Call init function for freertos objects (in freertos.c) */
+  MX_FREERTOS_Init();
+
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-//	  oled2->WriteString("USED I2C", Font11x18, White, 2, 2);
-//	  oled2->WriteString("TEST", Font7x10, White, 10, 20);
-//	  oled2->WriteString("SSD1306", Font6x8, White, 2, 40);
-	  //HAL_UART_Receive_IT(&huart2, &zmienna, 1);
+//	  oled->Fill(Black);
+//	  oled->WriteString("USED SPI", Font11x18, White, 2, i-40);
+//	  oled->WriteString("TEST", Font7x10, White, 10, i-20);
+//	  oled->WriteString("SSD1306", Font6x8, White, 2, i);
+//
+//	  oled2->Fill(Black);
+//	  oled2->WriteString("USED I2C", Font11x18, White, 2, i-40);
+//	  oled2->WriteString("TEST", Font7x10, White, 10, i-20);
+//	  oled2->WriteString("SSD1306", Font6x8, White, 2, i);
+//	  i++;
+//	  if (i>80){
+//		  i=0;
+//		  HAL_Delay(300);
+//	  }
+//	  HAL_Delay(20);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -210,6 +220,27 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM6 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM6) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.
