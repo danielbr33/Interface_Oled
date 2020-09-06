@@ -17201,7 +17201,7 @@ void MX_FREERTOS_Init(void) {
  8007e8e:	601a      	str	r2, [r3, #0]
 
   /* definition and creation of myTask02oledTas */
-  osThreadDef(myTask02oledTas, StartOledTask, osPriorityIdle, 0, 128);
+  osThreadDef(myTask02oledTas, StartOledTask, osPriorityNormal, 0, 128);
  8007e90:	4b13      	ldr	r3, [pc, #76]	; (8007ee0 <_Z16MX_FREERTOS_Initv+0x78>)
  8007e92:	f107 0418 	add.w	r4, r7, #24
  8007e96:	461d      	mov	r5, r3
@@ -17219,7 +17219,7 @@ void MX_FREERTOS_Init(void) {
  8007eb0:	601a      	str	r2, [r3, #0]
 
   /* definition and creation of interfaceTask */
-  osThreadDef(interfaceTask, StartInterfaceTask, osPriorityIdle, 0, 128);
+  osThreadDef(interfaceTask, StartInterfaceTask, osPriorityNormal, 0, 128);
  8007eb2:	4b0d      	ldr	r3, [pc, #52]	; (8007ee8 <_Z16MX_FREERTOS_Initv+0x80>)
  8007eb4:	1d3c      	adds	r4, r7, #4
  8007eb6:	461d      	mov	r5, r3
@@ -17298,8 +17298,8 @@ void StartOledTask(void const * argument)
  8007f14:	681b      	ldr	r3, [r3, #0]
  8007f16:	4618      	mov	r0, r3
  8007f18:	f7ff fcaa 	bl	8007870 <_ZN7SSD130617SPI_Interrupt_DMAEv>
-    osDelay(100);
- 8007f1c:	2064      	movs	r0, #100	; 0x64
+    osDelay(50);
+ 8007f1c:	2032      	movs	r0, #50	; 0x32
  8007f1e:	f7fc fd53 	bl	80049c8 <osDelay>
 	oled->SPI_Interrupt_DMA();
  8007f22:	e7f1      	b.n	8007f08 <_Z13StartOledTaskPKv+0x8>
@@ -17327,8 +17327,8 @@ void StartInterfaceTask(void const * argument)
  8007f36:	681b      	ldr	r3, [r3, #0]
  8007f38:	4618      	mov	r0, r3
  8007f3a:	f7fe fcb4 	bl	80068a6 <_ZN17Interface_manager9interruptEv>
-    osDelay(100);
- 8007f3e:	2064      	movs	r0, #100	; 0x64
+    osDelay(50);
+ 8007f3e:	2032      	movs	r0, #50	; 0x32
  8007f40:	f7fc fd42 	bl	80049c8 <osDelay>
 	Interface2->interrupt();
  8007f44:	e7f6      	b.n	8007f34 <_Z18StartInterfaceTaskPKv+0x8>
